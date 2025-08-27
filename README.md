@@ -1,51 +1,43 @@
-# invoice-processor
+# Invoice Processor — Веб-интерфейс
 
-**Автоматизация обработки первичной бухгалтерской документации**
-Скрипт для извлечения данных из **счетов-фактур, актов и накладных** (PDF/сканы) → в Excel.
+Инструмент для автоматической обработки счетов-фактур, актов и накладных (PDF/сканы) → Excel.
 
-## Зачем?
-Бухгалтеры тратят часы на ручной ввод. Этот инструмент:
-- Распознаёт текст (OCR)
-- Находит ключевые поля
-- Экспортирует в Excel
-- Сокращает время обработки с 10 минут до 30 секунд
+Теперь с **веб-интерфейсом** — загрузи документ, получи данные и выгрузку в Excel.
 
-## Пример
+![Web Interface Screenshot](screenshots/screenshot.png)
 
-**Ввод:**
-PDF-скан счёта
+## Особенности
+- Загрузка PDF и изображений через веб-форму
+- OCR и парсинг данных (номер, дата, поставщик, сумма, НДС)
+- Отображение результата на странице
+- Скачивание Excel-файла
+- Поддержка сканов и текстовых PDF
 
-**Вывод:**
-| doc_type       | date       | number  | supplier       | total     | nds       |
-|----------------|------------|---------|----------------|-----------|-----------|
-| Счёт-фактура   | 15.04.2025 | СЧ-1024 | ООО "ТехноЛайн" | 118 000,00| 18 000,00 |
+## Технологии
+- Python, FastAPI (бэкенд)
+- HTML/CSS/JS (фронтенд)
+- OCR: pytesseract + OpenCV
+- pandas, openpyxl
+- Docker (опционально)
 
-## Установка
+## Запуск
 
-# 1. Клонируй репозиторий
-git clone https://github.com/Carraigh/invoice-processor.git
-cd invoice-processor
+### 1. Создай виртуальное окружение
 
-# 2. Создай виртуальное окружение
-python3 -m venv venv
+python -m venv venv
 source venv/bin/activate
 
-# 3. Установи зависимости
+### 2. Установи зависимости
+
 pip install -r requirements.txt
 
-# 4. Установи системные утилиты (Debian/Ubuntu/Kali)
-sudo apt install poppler-utils tesseract-ocr
+### 3. Запусти сервер
 
-# 5. Запусти
-python main.py examples/sample.pdf
+uvicorn web.main:app --reload
 
-Технологии
-Python, OCR (Tesseract)
-pytesseract, pdf2image, Pillow, pandas
-Регулярные выражения
+Открой: http://localhost:8000
 
-Для кого?
-Бухгалтеры
-Финансовые аналитики
-Аудиторы
-FinOps
+### Через Docker
+
+docker-compose up --build
+

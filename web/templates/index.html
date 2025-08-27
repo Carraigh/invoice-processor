@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>Invoice Processor</title>
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>📄 Invoice Processor</h1>
+        <p>Загрузите счёт-фактуру, акт или накладную (PDF или скан)</p>
+
+        <form method="post" action="/upload" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".pdf,.jpg,.jpeg,.png" required />
+            <button type="submit">Обработать</button>
+        </form>
+
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+
+        {% if result %}
+            <h2>✅ Результат:</h2>
+            <table>
+                <tr><th>Поле</th><th>Значение</th></tr>
+                {% for key, value in result.items() %}
+                    <tr><td>{{ key }}</td><td>{{ value }}</td></tr>
+                {% endfor %}
+            </table>
+
+            <a href="/download/result.xlsx" class="btn">Скачать Excel</a>
+        {% endif %}
+    </div>
+</body>
+</html>
